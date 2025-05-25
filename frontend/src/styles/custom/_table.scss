@@ -1,0 +1,25 @@
+.table > :not(caption) > * > * {
+  background-color: var(--bs-table-bg);
+  border-bottom-width: var(--bs-border-width);
+  box-shadow: inset 0 0 0 9999px
+    var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+  color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+  padding: 1rem 1.5rem;
+  font-size: 14px;
+}
+
+.table thead {
+  tr {
+    border-top: 1px solid #e9eaed;
+  }
+}
+.table th {
+  color: #676f7e;
+  font-weight: 400;
+}
+
+.table-hover tbody tr:hover {
+  cursor: pointer;
+  border: 1px solid #e9eaed;
+  --bs-table-hover-bg: rgba(233, 234, 237, 0.2);
+}

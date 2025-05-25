@@ -1,0 +1,19 @@
+@import "bootstrap/scss/bootstrap";
+
+:root {
+  --bs-priamary: #05f;
+  --bs-body-font-size: 14px;
+  --shadow-subtle: rgba(0, 0, 0, 0.1) 0px 4px 12px;;
+}
+
+@import "custom/custom.scss";
+
+
+.shadow-subtle {
+  box-shadow: var(--shadow-subtle);
+}
+
+// v-toast
+.v-toast {
+  z-index: 5000;
+}

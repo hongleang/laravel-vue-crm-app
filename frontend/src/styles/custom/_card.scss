@@ -1,0 +1,15 @@
+:root {
+  --bs-border-color: #e9eaed;
+}
+
+.card {
+  --bs-card-title-spacer-y: 0.5rem;
+  --bs-card-border-width: var(--bs-border-width);
+  --bs-card-border-color: var(--bs-border-color);
+  --bs-card-border-radius: 0.75rem;
+}
+
+.card-body {
+  --bs-card-spacer-y: 2rem;
+  --bs-card-spacer-x: 2rem;
+}
