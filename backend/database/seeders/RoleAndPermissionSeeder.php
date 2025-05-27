@@ -19,6 +19,10 @@ class RoleAndPermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        foreach (PermissionEnum::cases() as $permissions) {
+            $permission = Permission::firstOrCreate(['name' => $permissions->value], ['name' => $permissions->value]);
+        }
+
         $roles = [
             RolesEnum::Admin->value => [
                 PermissionEnum::ReadDashboard,
@@ -26,8 +30,12 @@ class RoleAndPermissionSeeder extends Seeder
                 PermissionEnum::WriteUser,
                 PermissionEnum::DeleteUser,
                 PermissionEnum::RestoreUser,
+                PermissionEnum::ReadCompany,
+                PermissionEnum::WriteCompany,
+                PermissionEnum::DeleteCompany,
+                PermissionEnum::RestoreCompany,
             ],
-            RolesEnum::User->value => [
+            RolesEnum::Sales->value => [
                 PermissionEnum::ReadDashboard,
                 PermissionEnum::ReadUser,
             ]

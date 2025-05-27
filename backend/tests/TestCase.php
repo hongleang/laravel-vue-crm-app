@@ -26,4 +26,14 @@ abstract class TestCase extends BaseTestCase
     {
         return User::factory()->admin()->create($attributes);
     }
+
+    public function createManager(array $attributes=[]): User
+    {
+        return User::factory()->manager()->create($attributes);
+    }
+
+    public function createSales(array $attributes=[]): User
+    {
+        return User::factory()->sales()->create($attributes);
+    }
 }

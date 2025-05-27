@@ -14,11 +14,15 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = User::factory()->admin()->create([
-            'email' => 'admin@starter.com'
+            'email' => 'admin@crmapp.com'
+        ]);
+
+        $manager = User::factory()->manager()->create([
+            'email' => 'manager@crmapp.com'
         ]);
 
         $user = User::factory()->active()->create([
-            'email' => 'user@starter.com'
+            'email' => 'user@crmapp.com'
         ]);
 
         $activeUsers = User::factory(10)->active()->create();

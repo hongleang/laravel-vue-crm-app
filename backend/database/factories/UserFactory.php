@@ -51,17 +51,27 @@ class UserFactory extends Factory
     {
         return $this->state(fn(array $attributes) => [
             'status' => UserStatusEnum::Enabled,
-        ])->afterCreating(function (User $user) {
-            $user->assignRole(RolesEnum::User);
-        });
+        ]);
     }
 
     public function admin(): static
     {
-        return $this->state(fn(array $attributes) => [
-            'status' => UserStatusEnum::Enabled,
-        ])->afterCreating(function (User $user) {
+        return $this->active()->afterCreating(function (User $user) {
             $user->assignRole(RolesEnum::Admin);
+        });
+    }
+
+    public function manager(): static
+    {
+        return $this->active()->afterCreating(function (User $user) {
+            $user->assignRole(RolesEnum::Manager);
+        });
+    }
+
+    public function sales(): static
+    {
+        return $this->active()->afterCreating(function (User $user) {
+            $user->assignRole(RolesEnum::Sales);
         });
     }
 }

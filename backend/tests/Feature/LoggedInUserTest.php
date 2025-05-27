@@ -3,13 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class LoggedInUserTest extends TestCase
 {

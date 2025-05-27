@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\LoggedInUserResource;
 use Illuminate\Http\Request;
@@ -19,5 +20,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/', [UserController::class, 'show']);
         Route::put('/', [UserController::class, 'update']);
         Route::delete('/', [UserController::class, 'destroy']);
+    });
+
+    Route::get('/companies', [CompanyController::class, 'index']);
+    Route::post('/companies', [CompanyController::class, 'store']);
+
+    Route::prefix('/companies/{company}')->group(function () {
+        Route::get('/', [CompanyController::class, 'show']);
+        Route::put('/', [CompanyController::class, 'update']);
+        Route::delete('/', [CompanyController::class, 'destroy']);
     });
 });
