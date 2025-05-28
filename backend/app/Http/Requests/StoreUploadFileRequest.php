@@ -6,7 +6,7 @@ use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class StoreCompanyRequest extends FormRequest
+class StoreUploadFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class StoreCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'industry' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'min:9', 'max:255'],
-            'address' => ['required', 'string', 'max:255']
+            'files' => ['bail', 'array'],
+            'files.*' => ['bail', 'file', 'mimes:csv,txt,doc,docx,pdf,jpg,jpeg,png', 'max:2048'],
         ];
     }
 }

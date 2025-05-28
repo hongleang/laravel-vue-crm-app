@@ -14,11 +14,17 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->morphs('owner');
             $table->string('name');
-            $table->string('path');
-            $table->string('type');
+            $table->string('hash')->unique();
+            $table->string('directory');
+            $table->string('extension');
+            $table->unsignedInteger('bytes');
+            $table->string('disk')->default('local');
 
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

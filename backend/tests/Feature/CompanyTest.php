@@ -311,21 +311,28 @@ class CompanyTest extends TestCase
         $company = Company::factory()->create();
 
         $user = $this->createUser();
-        $user->givePermissionTo(PermissionEnum::WriteFile);
+        $user->givePermissionTo(PermissionEnum::WriteCompany);
 
         Storage::fake('local');
 
-        $file = UploadedFile::fake()->create('contract.pdf', 100, 'application/pdf');
+        $file1 = UploadedFile::fake()->create('file1.pdf', 100, 'application/pdf');
+        $file2 = UploadedFile::fake()->create('file2.jpg', 200, 'image/png');
+        $files = [$file1, $file2];
 
         $this->actingAs($user)
             ->postJson("/api/companies/$company->id/upload", [
-                'file' => $file
+                'files' => $files
             ])
             ->assertSuccessful()
             ->assertJson(fn(AssertableJson $json) => $json
                 ->has('files', fn(AssertableJson $json) => $json
                     ->where('files.0.name', $company->files()->first()->id))
                 ->etc());
+
+        $this->assertDatabaseHas('files', [
+            'owner_id' => $company->id,
+            'owner_type' => Company::class
+        ]);
     }
 
     public function testCanDeleteFileFromCompany() {}

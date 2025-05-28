@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyUploadFileController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\LoggedInUserResource;
 use Illuminate\Http\Request;
@@ -25,9 +27,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/companies', [CompanyController::class, 'index']);
     Route::post('/companies', [CompanyController::class, 'store']);
 
+    Route::get('/files/{file}', [FileController::class, 'show']);
+    Route::delete('/files/{file}', [FileController::class, 'destroy']);
+
     Route::prefix('/companies/{company}')->group(function () {
         Route::get('/', [CompanyController::class, 'show']);
         Route::put('/', [CompanyController::class, 'update']);
         Route::delete('/', [CompanyController::class, 'destroy']);
+
+        Route::post('/upload', CompanyUploadFileController::class);
     });
 });
