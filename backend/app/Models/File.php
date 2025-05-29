@@ -16,13 +16,14 @@ class File extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $disk = 'local';
+    
     protected $fillable = [
         'name',
         'hash',
         'directory',
         'extension',
-        'bytes',
-        'user_id'
+        'bytes'
     ];
 
     public function owner(): MorphTo

@@ -325,14 +325,22 @@ class CompanyTest extends TestCase
             ])
             ->assertSuccessful()
             ->assertJson(fn(AssertableJson $json) => $json
-                ->has('files', fn(AssertableJson $json) => $json
-                    ->where('files.0.name', $company->files()->first()->id))
+                ->has('data', fn(AssertableJson $json) => $json
+                    ->has('files', 2)
+                    ->where('files.0.name', 'file1.pdf')
+                    ->where('files.0.extension', 'pdf')
+                    ->where('files.0.bytes', $file1->getSize())
+                    ->has('files.0.hash')
+                    ->etc())
                 ->etc());
 
-        $this->assertDatabaseHas('files', [
-            'owner_id' => $company->id,
-            'owner_type' => Company::class
-        ]);
+        foreach ($company->files as $file) {
+            $this->assertDatabaseHas('files', [
+                'id' => $file->id,
+                'owner_id' => $company->id,
+                'owner_type' => Company::class
+            ]);
+        }
     }
 
     public function testCanDeleteFileFromCompany() {}

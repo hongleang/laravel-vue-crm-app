@@ -22,8 +22,6 @@ return new class extends Migration
             $table->unsignedInteger('bytes');
             $table->string('disk')->default('local');
 
-            $table->foreignIdFor(User::class, 'user_id')->constrained('users');
-
             $table->softDeletes();
             $table->timestamps();
         });

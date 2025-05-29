@@ -24,7 +24,7 @@ class StoreUploadFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => ['bail', 'array'],
+            'files' => ['bail', 'array', 'min:1'],
             'files.*' => ['bail', 'file', 'mimes:csv,txt,doc,docx,pdf,jpg,jpeg,png', 'max:2048'],
         ];
     }
