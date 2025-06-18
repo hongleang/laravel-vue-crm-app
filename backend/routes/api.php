@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyUploadFileController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\StoreCompanyNoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\LoggedInUserResource;
 use Illuminate\Http\Request;
@@ -36,5 +37,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/', [CompanyController::class, 'destroy']);
 
         Route::post('/upload', CompanyUploadFileController::class);
+        Route::post('/note', StoreCompanyNoteController::class);
     });
 });

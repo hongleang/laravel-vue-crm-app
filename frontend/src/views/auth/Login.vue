@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import AuthLogo from '@/components/AuthLogo.vue'
-import InputText from '@/components/ui/InputText.vue'
+import {InputText} from '@/components/ui'
 import { useAuthStore } from '@/stores/auth'
 import { handleValidationError } from '@/utils/helpers'
 import { useForm } from 'vee-validate'

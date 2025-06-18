@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Enums\PermissionEnum;
 use App\Models\Company;
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -246,14 +247,13 @@ class CompanyTest extends TestCase
             ]);
     }
 
-    public function testCanUpdateCompanyWithPermission()
+    public function testAdminCanUpdateCompanyWithPermission()
     {
         $company = Company::factory()->create();
 
-        $user = $this->createUser();
-        $user->givePermissionTo(PermissionEnum::WriteCompany);
+        $admin = $this->createAdmin();
 
-        $this->actingAs($user)
+        $this->actingAs($admin)
             ->putJson("/api/companies/$company->id", [
                 'name' => 'test company',
                 'industry' => 'test industry',
@@ -289,14 +289,13 @@ class CompanyTest extends TestCase
             ->assertForbidden();
     }
 
-    public function testCanDeleteCompanyWithPermission()
+    public function testAdminCanDeleteCompanyWithPermission()
     {
         $company = Company::factory()->create();
 
-        $user = $this->createUser();
-        $user->givePermissionTo(PermissionEnum::WriteCompany);
+        $admin = $this->createAdmin();
 
-        $this->actingAs($user)
+        $this->actingAs($admin)
             ->deleteJson("/api/companies/$company->id")
             ->assertNoContent();
 
@@ -310,8 +309,7 @@ class CompanyTest extends TestCase
     {
         $company = Company::factory()->create();
 
-        $user = $this->createUser();
-        $user->givePermissionTo(PermissionEnum::WriteCompany);
+        $admin = $this->createAdmin();
 
         Storage::fake('local');
 
@@ -319,7 +317,7 @@ class CompanyTest extends TestCase
         $file2 = UploadedFile::fake()->create('file2.jpg', 200, 'image/png');
         $files = [$file1, $file2];
 
-        $this->actingAs($user)
+        $this->actingAs($admin)
             ->postJson("/api/companies/$company->id/upload", [
                 'files' => $files
             ])
@@ -343,9 +341,27 @@ class CompanyTest extends TestCase
         }
     }
 
-    public function testCanDeleteFileFromCompany() {}
+    public function testCanAddNoteToCompany()
+    {
+        $company = Company::factory()->create();
 
-    // Notes & Interactions
-    public function testCanAddNoteToCompany() {}
-    public function testCanViewCompanyActivityTimeline() {}
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin)
+            ->postJson("/api/companies/$company->id/note", [
+                'content' => 'test note'
+            ])
+            ->assertSuccessful()
+            ->assertJson(fn(AssertableJson $json) => $json
+                ->has('data', fn(AssertableJson $json) => $json
+                    ->has('notes', 1, fn(AssertableJson $json) => $json
+                        ->where('content', 'test note')
+                        ->where('created_by', $admin->name)
+                        ->etc())
+                    ->etc()));
+
+        $this->assertDatabaseHas('notes', [
+            'content' => 'test note'
+        ]);
+    }
 }

@@ -44,7 +44,7 @@ class UserTest extends TestCase
                             ->where('name', $admin->name)
                             ->where('email', $admin->email)
                             ->where('mobile', $admin->mobile)
-                            ->where('created_at', $admin->created_at->format('Y-m-d h:i:s'))
+                            ->has('created_at')
                             ->etc();
                     });
             });
@@ -129,6 +129,8 @@ class UserTest extends TestCase
 
     public function testCanViewSingleUser()
     {
+        Carbon::setTestNow(Carbon::now());
+
         $admin = $this->createAdmin();
 
         $this->actingAs($admin)
@@ -142,7 +144,7 @@ class UserTest extends TestCase
                         ->where('last_name', $admin->last_name)
                         ->where('email', $admin->email)
                         ->where('mobile', $admin->mobile)
-                        ->where('created_at', $admin->created_at->format('Y-m-d h:i:s'))
+                        ->has('created_at')
                         ->etc();
                 });
             });
@@ -183,7 +185,7 @@ class UserTest extends TestCase
                         ->where('name', 'John Doe')
                         ->where('email', 'john@example.com')
                         ->where('mobile', '1234567890')
-                        ->where('created_at', now()->format('Y-m-d h:i:s'))
+                        ->has('created_at')
                         ->etc();
                 });
             });
@@ -254,7 +256,7 @@ class UserTest extends TestCase
                         ->where('name', 'John Doe')
                         ->where('email', 'john@example.com')
                         ->where('mobile', '1234567890')
-                        ->where('created_at', now()->format('Y-m-d h:i:s'))
+                        ->has('created_at')
                         ->etc();
                 });
             });

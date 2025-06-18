@@ -3,9 +3,11 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RolesEnum;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Spatie\Permission\Contracts\Role;
 
 class CompanyPolicy
 {
@@ -14,7 +16,7 @@ class CompanyPolicy
      */
     public function list(User $user): bool
     {
-        return $user->can(PermissionEnum::ReadCompany);
+        return $user->hasPermissionTo(PermissionEnum::ReadCompany);
     }
 
     /**
@@ -22,7 +24,7 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company): bool
     {
-        return $user->can(PermissionEnum::ReadCompany);
+        return $user->hasPermissionTo(PermissionEnum::ReadCompany);
     }
 
     /**
@@ -38,7 +40,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        return $user->can(PermissionEnum::WriteCompany);
+        return $user->hasPermissionTo(PermissionEnum::WriteCompany);
     }
 
     /**
@@ -46,6 +48,6 @@ class CompanyPolicy
      */
     public function delete(User $user, Company $company): bool
     {
-        return $user->can(PermissionEnum::WriteCompany);
+        return $user->hasRole(RolesEnum::Admin) && $user->hasPermissionTo(PermissionEnum::WriteCompany);
     }
 }

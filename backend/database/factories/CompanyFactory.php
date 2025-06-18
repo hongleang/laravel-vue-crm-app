@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -34,7 +35,8 @@ class CompanyFactory extends Factory
             'industry' => fake()->randomElement($industries),
             'phone' => '04' . fake()->numerify('########'),
             'email' => fake()->unique()->email(),
-            'address' => fake()->address()
+            'address' => fake()->address(),
+            'creator_id' => User::factory(),
         ];
     }
 }

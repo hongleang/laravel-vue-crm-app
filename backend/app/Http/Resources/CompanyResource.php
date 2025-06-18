@@ -21,7 +21,8 @@ class CompanyResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-            'files' => FileResource::collection($this->whenLoaded('files'))
+            'files' => FileResource::collection($this->whenLoaded('files')),
+            'notes' => NoteResource::collection($this->whenLoaded('notes'))
         ];
     }
 }

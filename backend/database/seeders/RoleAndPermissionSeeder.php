@@ -35,6 +35,15 @@ class RoleAndPermissionSeeder extends Seeder
                 PermissionEnum::DeleteCompany,
                 PermissionEnum::RestoreCompany,
             ],
+            RolesEnum::Manager->value => [
+                PermissionEnum::ReadDashboard,
+                PermissionEnum::ReadUser,
+                PermissionEnum::WriteUser,
+                PermissionEnum::DeleteUser,
+                PermissionEnum::RestoreUser,
+                PermissionEnum::ReadCompany,
+                PermissionEnum::WriteCompany
+            ],
             RolesEnum::Sales->value => [
                 PermissionEnum::ReadDashboard,
                 PermissionEnum::ReadUser,

@@ -16,9 +16,9 @@
         </RouterLink>
       </li>
       <li>
-        <RouterLink :to="{ name: 'user-list' }" class="sidebar-item nav-link" active-class="active">
+        <RouterLink :to="{ name: 'company-list' }" class="sidebar-item nav-link" active-class="active">
           <i class="far fa-fw fa-building me-2"></i>
-          Users
+          Companies
         </RouterLink>
       </li>
       <li>
@@ -30,7 +30,7 @@
       <li>
         <RouterLink to="/dashboard" class="sidebar-item nav-link" active-class="active">
           <i class="fas fa-fw fa-print me-2"></i>
-          Reprots
+          Reports
         </RouterLink>
       </li>
     </ul>

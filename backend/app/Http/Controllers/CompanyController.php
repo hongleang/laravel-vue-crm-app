@@ -38,15 +38,19 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request): CompanyResource
     {
-        $company = Company::create($request->safe()->only([
+        $company = new Company();
+        $company->fill($request->safe()->only([
             'name',
             'industry',
             'email',
             'phone',
             'address'
         ]));
+        $company->creator_id = $request->user()->id;
 
-        return CompanyResource::make($company);
+        $company->save();
+
+        return CompanyResource::make($company->load(['files', 'notes']));
     }
 
     /**
@@ -56,7 +60,7 @@ class CompanyController extends Controller
     {
         Gate::authorize('view', $company);
 
-        return CompanyResource::make($company);
+        return CompanyResource::make($company->load(['files', 'notes']));
     }
 
     /**
@@ -72,7 +76,7 @@ class CompanyController extends Controller
             'address'
         ]));
 
-        return CompanyResource::make($company);
+        return CompanyResource::make($company->load(['files', 'notes']));
     }
 
     /**

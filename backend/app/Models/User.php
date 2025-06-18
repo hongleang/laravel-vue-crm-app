@@ -76,15 +76,6 @@ class User extends Authenticatable
     {
         $permissions = $this->getAllPermissions()->pluck('name');
 
-        $permissions = $permissions
-            ->map(function (string $permission) {
-                [$action, $subject] = explode(' ', $permission);
-                return [
-                    'subject' => ucfirst($subject),
-                    'action' => $action
-                ];
-            });
-
         return Attribute::make(
             get: fn(mixed $value, array $attributes) => $permissions,
         );

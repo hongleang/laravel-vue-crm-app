@@ -16,9 +16,7 @@ class FileTest extends TestCase
     {
         $file = File::factory()
             ->for($this->createUser(), 'owner')
-            ->create([
-                'user_id' => $this->createUser()->id
-            ]);
+            ->create();
 
         $this->assertTrue(Str::startsWith($file->relative_path, $file->directory));
         $this->assertTrue(Str::endsWith($file->relative_path, $file->hash));
@@ -26,17 +24,13 @@ class FileTest extends TestCase
 
     public function testCanGetBase64()
     {
-        $file = File::factory()->contents('test')->for(User::factory(), 'owner')->create([
-            'user_id' => $this->createUser()->id
-        ]);
+        $file = File::factory()->contents('test')->for(User::factory(), 'owner')->create();
         $this->assertEquals(base64_encode('test'), $file->base64);
     }
 
     public function testCanGetFileContent()
     {
-        $file = File::factory()->contents('test')->for(User::factory(), 'owner')->create([
-            'user_id' => $this->createUser()->id
-        ]);
+        $file = File::factory()->contents('test')->for(User::factory(), 'owner')->create();
         $this->assertEquals('test', $file->contents);
     }
 }

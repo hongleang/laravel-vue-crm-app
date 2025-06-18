@@ -1,28 +1,7 @@
 import http from '@/services/http'
 import { defineStore } from 'pinia'
 import { ability, updateAbilityFor } from '@/utils/abilities'
-
-type UserStatus = 'Enabled' | 'Disabled' | 'Archived' | 'Pending'
-
-export type LoggedInUser = {
-  id: number
-  name: string
-  email: string
-  status: UserStatus
-  roles: string[]
-  abilities: LoggedInUserAbilities[]
-}
-
-export type Credential = {
-  email: string
-  password: string
-  remember: boolean
-}
-
-export type LoggedInUserAbilities = {
-  action: string
-  subject: string
-}
+import type { LoggedInUser, Credential } from '@/types/model'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -31,6 +10,7 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async getUser() {
+      if (this.user) return
       try {
         const response = await http.get('/user')
         this.user = response.data.data

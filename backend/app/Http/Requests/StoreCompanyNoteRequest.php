@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class StoreUploadFileRequest extends FormRequest
+class StoreCompanyNoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +23,7 @@ class StoreUploadFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => ['bail', 'array', 'min:1'],
-            'files.*' => ['bail', 'file', 'mimes:csv,txt,doc,docx,pdf,jpg,jpeg,png', 'max:2048'],
+            'content' => ['required', 'string', 'max:1000'],
         ];
     }
 }
