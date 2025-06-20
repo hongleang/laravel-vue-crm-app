@@ -15,13 +15,16 @@ export type Credential = {
   remember: boolean
 }
 
-export interface Pagination {
+type Pagination = {
+  current_page: number
+  from: number
+  last_page: number
+  links: Link[]
+  path: string | null
+  per_page: number
+  to: number
   total: number
-  perPage: number
-  currentPage: number
-  lastPage: number
 }
-
 export interface Link {
   url: string | null
   label: string

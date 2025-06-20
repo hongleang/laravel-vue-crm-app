@@ -30,7 +30,7 @@ class CompanyController extends Controller
                 $query->orderBy('name', $value);
             });
 
-        return CompanyListResource::collection($companiesQuery->paginate(50));
+        return CompanyListResource::collection($companiesQuery->paginate(20));
     }
 
     /**

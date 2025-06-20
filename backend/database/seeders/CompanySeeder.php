@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\RolesEnum;
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class CompanySeeder extends Seeder
@@ -12,6 +14,8 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Company::factory(50)->create([
+            'creator_id' => User::role(RolesEnum::Admin->value)->first()->id
+        ]);
     }
 }

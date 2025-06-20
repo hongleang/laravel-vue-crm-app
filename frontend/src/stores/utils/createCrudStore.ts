@@ -32,7 +32,7 @@ export function createCrudStore<TList, TResource>(
       async getCollection({ params }: { params?: LocationQuery } = {}) {
         try {
           this.loading = true
-          const response = await http.get(url, { params })
+          const response = await http.get(this.getUrl, { params })
           this.collection = response.data.data
           this.pagination = response.data.meta
         } catch (error) {
@@ -45,7 +45,7 @@ export function createCrudStore<TList, TResource>(
       async getResource({ id }: { id: number; params?: Record<string, any> }) {
         try {
           this.loading = true
-          const response = await http.get(`${url}/${id}`)
+          const response = await http.get(`${this.getUrl}/${id}`)
           this.resource = response.data.data
         } catch (error) {
           throw error
@@ -70,7 +70,7 @@ export function createCrudStore<TList, TResource>(
       async updateResource({ id, payload }: { id: number; payload: TResource }) {
         try {
           this.loading = true
-          const response = await http.put(`${url}/${id}`, payload)
+          const response = await http.put(`${this.getUrl}/${id}`, payload)
           this.resource = response.data.data
         } catch (error) {
           throw error
@@ -82,8 +82,9 @@ export function createCrudStore<TList, TResource>(
       async loadNewPage(url: string) {
         try {
           this.loading = true
-          const query = new URL(url).search // "?page=2"
-          const response = await http.get(url + query)
+          const params = new URL(url).searchParams // "?page=2"
+          const query = Object.fromEntries(params.entries())
+          const response = await http.get(this.getUrl, { params: query })
           this.collection = response.data.data
           this.pagination = response.data.meta
         } catch (error) {
